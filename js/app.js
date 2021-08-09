@@ -1,6 +1,6 @@
 showNotes();
 
-// function to store user input in local storage 
+// function to store user input in local storage
 
 let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
@@ -48,10 +48,9 @@ function showNotes() {
   }
 }
 
-// function to delete a note 
+// function to delete a note
 
 function deleteNote(index) {
- 
   let notes = localStorage.getItem("notes");
 
   if (notes == null) {
@@ -59,25 +58,30 @@ function deleteNote(index) {
   } else {
     notesObj = JSON.parse(notes);
   }
-  notesObj.splice(index,1);
+  notesObj.splice(index, 1);
   localStorage.setItem("notes", JSON.stringify(notesObj));
-  showNotes()
+  //bug resolved(removed the last ui left after deletion )
+
+  if (notesObj.length != 0) {
+    showNotes();
+  } else {
+    let notesElm = document.getElementById("notes");
+    notesElm.innerHTML = null;
+  }
 }
 
-// function to search notes 
- let search=document.getElementById("searchTxt")
-  search.addEventListener("input",function(){
-    let inputVal=search.value.toLowerCase()
-   
-    let noteCards=document.getElementsByClassName("noteCard");
-    Array.from(noteCards).forEach(function(element){
-      let cardTxt=element.getElementsByTagName("p")[0].innerText;
-      if(cardTxt.includes(inputVal)){
-          element.style.display="block";
-        
-      }
-      else{
-        element.style.display="none";
-      }
-    })
-  })
+// function to search notes
+let search = document.getElementById("searchTxt");
+search.addEventListener("input", function () {
+  let inputVal = search.value.toLowerCase();
+
+  let noteCards = document.getElementsByClassName("noteCard");
+  Array.from(noteCards).forEach(function (element) {
+    let cardTxt = element.getElementsByTagName("p")[0].innerText;
+    if (cardTxt.includes(inputVal)) {
+      element.style.display = "block";
+    } else {
+      element.style.display = "none";
+    }
+  });
+});
